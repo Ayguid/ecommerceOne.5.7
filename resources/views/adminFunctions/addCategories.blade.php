@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
-          <div class="card-header">Add/Edit Category</div>
+          <div class="card-header">Categories</div>
 
           <div class="card-body">
             @if(Session::has('alert-success'))
@@ -24,7 +24,18 @@
               @isset($categories)
                 <ul>
                   @foreach ($categories as $key => $category)
-                    <li>{{$category->product_category_description}}&nbsp &nbsp<a href="{{route('admin.showCategoryForm', $category->id)}}">edit</a></li>
+                    <li>{{$category->product_category_description}}&nbsp &nbsp
+                    <button id="{{$category->id}}" class="editCategory" type="button" name="editCategory">edit</button>
+                    </li>
+
+
+                    <form  class="editCategoryForm" action="{{route('admin.updateCategory')}}" method="POST" hidden>
+                      {{ csrf_field() }}
+                      <input type="text" name="category_id" value="{{$category->id}}" hidden>
+                      <input type="text" name="product_category_description" value="{{$category->product_category_description}}" >
+                      <input type="submit" name="submit" value="submit">
+                    </form>
+
                   @endforeach
                   <br>
                   <br>
@@ -77,7 +88,44 @@ window.onload = function() {
       form.hidden=false;
     }
   });
+
+
+
+
+
+
+  var buttons= document.getElementsByClassName("editCategory");
+  var forms= document.getElementsByClassName("editCategoryForm");
+
+
+  for (var i = 0; i < forms.length; i++) {
+      // console.log(buttons[i]);
+      buttons[i].addEventListener("click", function(event){
+
+        if (forms[event.path[0].id - 1].hidden===false) {
+          forms[event.path[0].id -1].hidden=true;
+        }
+        else {
+          forms[event.path[0].id -1].hidden=false;
+        }
+
+
+      });
+  }
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
 </script>
 
 @endsection

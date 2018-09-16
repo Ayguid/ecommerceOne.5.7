@@ -14,7 +14,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
-          <div class="card-header">Add Brand</div>
+          <div class="card-header">Brands</div>
 
           <div class="card-body">
             @if(Session::has('alert-success'))
@@ -33,7 +33,10 @@
               @isset($brands)
                 <ul>
                   @foreach ($brands as $key => $brand)
-                    <li>{{$brand->product_brand_name}}&nbsp &nbsp<a href="{{route('admin.showBrandForm', $brand->id)}}">edit</a></li>
+                    <li>{{$brand->product_brand_name}}&nbsp &nbsp
+                      {{-- <a href="{{route('admin.showBrandForm', $brand->id)}}">edit</a> --}}
+                      <a href="#">edit</a>
+                    </li>
                   @endforeach
                   <br>
                   <br>

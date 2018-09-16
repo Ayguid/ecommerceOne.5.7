@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Validator;
 use App\Product;
+use App\Ref_Product_Category;
+use App\Ref_Product_Brand;
 use App\Image;
 use App\Http\Controllers\Helpers\Input_Validator;
 use Illuminate\Support\Facades\Storage;
@@ -27,6 +29,16 @@ class ProductController extends Controller
     //
   }
 
+
+
+
+    public function showAddProductsForm()
+    {
+      $categories=Ref_Product_Category::All();
+      $brands=Ref_Product_Brand::All();
+      $data= ['categories'=>$categories, 'brands'=>$brands];
+      return view('adminFunctions.addProducts')->with('data', $data);
+    }
 
 
   public function saveProduct(Request $request)

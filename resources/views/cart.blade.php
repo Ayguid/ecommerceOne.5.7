@@ -57,11 +57,11 @@
                     </tr>
                     <tr>
                         <td>Sub Total:</td>
-                        <td>{{Cart::getSubTotal()}}</td>
+                        <td>{{Cart::getSubTotal()}} $</td>
                     </tr>
                     <tr>
                         <td>Total:</td>
-                        <td>{{Cart::getTotal()}}</td>
+                        <td>{{Cart::getTotal()}} $</td>
                     </tr>
                 </table>
 

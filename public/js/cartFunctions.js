@@ -1,7 +1,8 @@
 
 
 
-var forms= document.forms;
+// var forms= document.forms;
+var forms= document.getElementsByClassName("addToCartForm");
 
 for (var i = 0; i < forms.length; i++) {
   forms[i].onsubmit=addProduct;
@@ -12,9 +13,11 @@ for (var i = 0; i < forms.length; i++) {
 
 function addProduct(e) {
   e.preventDefault();
+
   var data = new FormData(e.target);
+
   //start cart counter
-  var cartCounter=0;
+  cartCounter=0;
 
   //start ajax request
   $.ajax({
@@ -28,13 +31,18 @@ function addProduct(e) {
     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
     //succes proceed to...
     success:function(data){
-      // swal('Product Added');
+
       //como pasa data de ser un request a un response?????!!!
       response= Object.values(data);
+
+
       console.log(response);
+
+
       response.forEach(function(element) {
-        // console.log('1');
-        cartCounter += element.quantity;});
+        cartCounter += parseInt(element.quantity);
+      });
+
         document.getElementById("cartCount").innerHTML = cartCounter;
       },
       //error execute

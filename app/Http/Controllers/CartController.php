@@ -42,7 +42,6 @@ class CartController extends Controller
     if ($request->quantity > 1) {
       $quantity=$request->quantity;
     }
-    // dd($request->quantity);
 
     $product=Product::find($request->product_id);
         \Cart::add(array(

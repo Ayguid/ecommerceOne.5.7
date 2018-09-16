@@ -23,6 +23,7 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
   <!-- Styles -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="shortcut icon" href="{{{ asset('favicon.ico') }}}">
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('styles/ecommerceStyle1.css') }}" rel="stylesheet">

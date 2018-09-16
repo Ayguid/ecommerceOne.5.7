@@ -18,13 +18,25 @@ class Ref_Product_Brand_Controller extends Controller
   }
 
 
+
+
+
+  public static function showBrands(){
+    $brands=Ref_Product_Brand::All();
+    return view('adminFunctions.addBrands')->with('brands', $brands);
+  }
+
+
+
+
+
   public function saveBrand(Request $request)
   {
     $input_validator = new Input_Validator();
     if ($input_validator->validateBrand($request)->fails())
     {
       $request->session()->flash('alert-danger', 'There was a problem adding your Brand!');
-      return redirect(route('admin.addBrands'))->withInput()->withErrors($input_validator->validateBrand( $request));
+      return redirect(route('admin.showBrands'))->withInput()->withErrors($input_validator->validateBrand( $request));
 
     }
     else
@@ -36,7 +48,7 @@ class Ref_Product_Brand_Controller extends Controller
       if ($brand->save())
       {
         $request->session()->flash('alert-success', 'Added Succesfully!');
-        return redirect(route('admin.addBrands'));
+        return self::showBrands();
       }
       // else{
       //   $request->session()->flash('alert-danger', 'There was a problem adding your category!');
@@ -50,7 +62,7 @@ class Ref_Product_Brand_Controller extends Controller
   public function showBrandForm($id)
   {
 
-}
+  }
 
 
 

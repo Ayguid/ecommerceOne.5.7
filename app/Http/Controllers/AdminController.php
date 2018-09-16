@@ -37,14 +37,6 @@ class AdminController extends Controller
 
 
 
-  public function showAddProductsForm()
-  {
-    $categories=Ref_Product_Category::All();
-    $brands=Ref_Product_Brand::All();
-    $data= ['categories'=>$categories, 'brands'=>$brands];
-    return view('adminFunctions.addProducts')->with('data', $data);
-  }
-
 
   public function showEditProductsForm($id)
   {
@@ -54,18 +46,6 @@ class AdminController extends Controller
     $data= ['categories'=>$categories, 'brands'=>$brands, 'product'=>$product];
     return view('adminFunctions.editProduct')->with('data', $data);
   }
-
-
-  public function showAddCategoriesForm(){
-    $categories=Ref_Product_Category::All();
-    return view('adminFunctions.addCategories')->with('categories', $categories);
-  }
-
-  public function showAddBrandsForm(){
-    $brands=Ref_Product_Brand::All();
-    return view('adminFunctions.addBrands')->with('brands', $brands);
-  }
-
 
 
 

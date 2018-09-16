@@ -47,8 +47,8 @@
 
 @if($products->count() > 1)
 
-  {{ $products->links() }}
-  {{-- {{ $products->appends(Illuminate\Support\Facades\Input::except('page'))->links() }} --}}
+  {{-- {{ $products->links() }} --}}
+  {{ $products->appends(Illuminate\Support\Facades\Input::except('page'))->links() }}
 
 @endif
 
