@@ -21,8 +21,11 @@
           @endif --}}
 
           <div class="showcase">
-            <form id="addProductForm" class="addProduct-form" action="{{route('admin.updateProduct', $data['product']->id)}}" method="post" enctype="multipart/form-data">
+            <form id="addProductForm" class="addProduct-form" action="{{route('admin.updateProduct')}}" method="post" enctype="multipart/form-data">
               {{ csrf_field() }}
+
+
+              <input type="text" name="id" value="{{$data['product']->id}}" hidden>
 
 
               <div class="form-group">
@@ -85,10 +88,18 @@
                 @endif
               </div>
 
+
+              <div class="form-group">
+                <label for="stock">Stock</label>
+              <input class="form-control" type="number" name="stock" min="0" value="{{$data['product']->stock->quantity}}" placeholder="Stock"><br>
+
+            </div>
+
+
               <input   type="submit" value="submit" class="btn btn-primary">
             </form>
           </div>
-
+          <br>
 
           <a href="{{route('admin.dashboard')}}">Back to DashBoard</a>
         </div>

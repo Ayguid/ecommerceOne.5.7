@@ -31,7 +31,7 @@ class User_Order_Controller extends Controller
   {
     $data=[
 
-    'cart'=>$cart = Cart::content(),
+    'cart'=>$cart = Cart::getContent(),
     'user'=>$user= Auth::user()
 ];
     return view('data-order')->with('data', $data);
@@ -65,10 +65,6 @@ class User_Order_Controller extends Controller
       {
         $user_order->items->each->delete();
         $user_order->delete();
-        // foreach ($user_order->items as $key => $item) {
-        //   $item->delete();
-        // }
-        // $user_order->delete();
       }
       //seguid con otros casos
 
@@ -78,10 +74,10 @@ class User_Order_Controller extends Controller
         $user_order->user_id=0;
         $user_order->update();
       }
-
       //vuelve a la vista de orders
       return self::showOrders();
     }
+
   }
 
 
@@ -91,7 +87,8 @@ class User_Order_Controller extends Controller
 
   public static function cartToOrder(Request $request)
   {
-    $cart = Cart::content();
+    $cart = \Cart::getContent();
+    // dd($cart);
     if ($cart->count() > 0)
     {
       //faltan validacioones
@@ -108,12 +105,12 @@ class User_Order_Controller extends Controller
       {
         $order_item= new Order_Item();
         $order_item->product_id=$cartItem->id;
-        $order_item->item_order_quantity=$cartItem->qty;
+        $order_item->item_order_quantity=$cartItem->quantity;
         $order_item->item_price=$cartItem->price;
         $user_order->items()->save($order_item);
       }
       // destruir aca??!
-      Cart::destroy();
+      Cart::clear();
 
       if ($saveCart)
       {

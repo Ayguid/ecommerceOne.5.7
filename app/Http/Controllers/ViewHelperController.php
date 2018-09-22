@@ -11,8 +11,8 @@ use App\Product;
 class ViewHelperController extends Controller
 {
 
-  //index all products /or by category
-  public function index( Request $request)
+  //index one product, or all products, /or all products for one category
+  public function index(Request $request)
   {
     if ($request->id) {
       $product=Product::where('id', $request->id)->first();
@@ -32,19 +32,37 @@ class ViewHelperController extends Controller
 
 
 
+
+
+
+
+
+
   public function filter(Request $request)
   {
+    if ($request->id) {
+      $products=Product::where('id', $request->id)->first();
+      // return view ('productView')->with('product',$product);
+      return view ('landing')->with('data',['products'=>$products ]);
+    }
+
+    
+
     $products=Product::query()
     ->when($request->has('product_name'), function ($query) use ($request) {
-      return $query->where('product_name', 'LIKE', '%' . $request->product_name .'%');
+       $query->where('product_name', 'LIKE', '%' . $request->product_name .'%');
     })
     ->when($request->has('product_category_code'), function ($query) use ($request) {
-      return $query->whereIn('product_category_code', $request->product_category_code);
+       $query->whereIn('product_category_code', $request->product_category_code);
     })
     ->when($request->has('product_brand_code'), function ($query) use ($request) {
-      return $query->whereIn('product_brand_code', $request->product_brand_code);
+       $query->whereIn('product_brand_code', $request->product_brand_code);
     })
     ->paginate(5);
+
+
+    $request->session()->flash('status', 'Your search was...!');
+
     return view ('landing')->with('data',['products'=>$products ]);
   }
 

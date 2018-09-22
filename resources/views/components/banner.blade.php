@@ -6,8 +6,13 @@
   <div id="{{$product->id}}" class="product" >
 
 
-    <a  href="{{route('showProduct', $product->id)}}">{{$product->product_name}}</a>
+    @if (Auth::guard('admin')->check())
+      <a href="{{route('admin.showEditProductForm', $product->id)}}"><i class="far fa-edit"></i> </a> &nbsp &nbsp &nbsp
+    @endif
+    <a  href="{{route('showProduct', $product->id)}}">{{$product->product_name}}</a><br>
     @if ($product->price !== $product->discountPrice())
+      Price: {{$product->price}}<br>
+      Discount: {{($product->onSale->discount) .'%'}}<br>
       Discount Price: {{$product->discountPrice()}}
     @else
       Price: {{$product->price}}

@@ -24,6 +24,12 @@ class Input_Validator extends controller
   }
 
 
+
+
+
+
+
+
   //validate new product request
   public function validateNewProductRequest($request)
   {
@@ -61,6 +67,9 @@ class Input_Validator extends controller
       'images.*.max' => 'Sorry! Maximum allowed size for an image is 50MB',
     ]);
   }
+
+
+
 
 
 

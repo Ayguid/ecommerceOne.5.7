@@ -33,9 +33,9 @@
         <h3>Price: {{$product->price}}</h3>
         <h3>{{$product->category->product_category_description}}</h3>
         <h3>{{$product->brand->product_brand_name}}</h3>
-              {{-- @if (Auth::guard('admin')->check())
-                <a href="{{route('admin.editProduct', $product->id)}}">Edit Product</a>
-              @endif --}}
+              @if (Auth::guard('admin')->check())
+                <a href="{{route('admin.showEditProductForm', $product->id)}}">Edit Product</a>
+              @endif
             </div>
     </div>
 

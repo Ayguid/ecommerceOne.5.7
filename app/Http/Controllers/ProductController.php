@@ -10,7 +10,8 @@ use App\Ref_Product_Brand;
 use App\Image;
 use App\Http\Controllers\Helpers\Input_Validator;
 use Illuminate\Support\Facades\Storage;
-
+use App\Stock_Item;
+use DB;
 
 class ProductController extends Controller
 {
@@ -19,30 +20,43 @@ class ProductController extends Controller
   {
     $this->middleware('auth:admin');
   }
-  /**
-  * Display a listing of the resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function index()
+
+
+
+
+  public function showAddProductsForm()
   {
-    //
+    $categories=Ref_Product_Category::All();
+    $brands=Ref_Product_Brand::All();
+    $data= ['categories'=>$categories, 'brands'=>$brands];
+    return view('adminFunctions.addProducts')->with('data', $data);
   }
 
 
 
 
-    public function showAddProductsForm()
-    {
-      $categories=Ref_Product_Category::All();
-      $brands=Ref_Product_Brand::All();
-      $data= ['categories'=>$categories, 'brands'=>$brands];
-      return view('adminFunctions.addProducts')->with('data', $data);
-    }
+
+
+  public function showEditProductsForm($id)
+  {
+    $categories=Ref_Product_Category::All();
+    $brands=Ref_Product_Brand::All();
+    $product=Product::find($id);
+    $data= ['categories'=>$categories, 'brands'=>$brands, 'product'=>$product];
+    return view('adminFunctions.editProduct')->with('data', $data);
+  }
+
+
+
+
+
 
 
   public function saveProduct(Request $request)
   {
+
+    return DB::transaction(function () use ($request) {
+
     $input_validator= new Input_Validator();
     $save = false;
     if ($input_validator->validateNewProductRequest($request)->fails())
@@ -55,6 +69,9 @@ class ProductController extends Controller
 
       $product = new Product($input_validator->getInputs($request));
       $save = $product->save();
+      $stockItem= new Stock_Item;
+      $stockItem->quantity=$request->stock;
+      $product->stock()->save($stockItem);
 
       if ($request->file('images') !== null){
         foreach ($request->file('images') as $key => $value) {
@@ -66,6 +83,7 @@ class ProductController extends Controller
         }
       }
     }
+
     if ($save)
     {
       $request->session()->flash('alert-success', 'Added Succesfully!');
@@ -77,13 +95,20 @@ class ProductController extends Controller
       return redirect(route('admin.addProducts'))->withInput()->withErrors($input_validator->validateNewProductRequest( $request));
     }
 
+    });
+
+
+
   }
 
 
 
 
-  public function update(Request $request, $id)
+
+
+  public function update(Request $request)
   {
+    $id=$request->id;
     $input_validator= new Input_Validator();
     $update = false;
 
@@ -96,7 +121,10 @@ class ProductController extends Controller
     {
       $product=Product::find($id);
       $update=$product->update($input_validator->getInputs($request));
-      //falta que se borren las imagenes viejas
+      $product->stock()->update(['quantity'=>$request->stock]);
+
+
+
       if ($request->file('images') !== null)
       {
         //refinar abstraer a image controller
@@ -116,62 +144,26 @@ class ProductController extends Controller
           $image->storeAs('public/uploads/Product_Photo', $file_name);
         }
       }
-      //
+
     }
 
     if ($update)
     {
       $request->session()->flash('alert-success', 'Updated Succesfully!');
-      return redirect(route('admin.editProduct', $id));
+      return redirect(route('admin.showEditProductForm', $id));
     }else
     {
       $request->session()->flash('alert-danger', 'There was a problem updating your product!');
-      return redirect(route('admin.editProduct', $id))->withInput()->withErrors($input_validator->validateEditProductRequest($request));
+      return redirect(route('admin.showEditProductForm', $id))->withInput()->withErrors($input_validator->validateEditProductRequest($request));
     }
   }
 
 
 
 
-    /**
-    * Show the form for editing the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-    public function edit($id)
-    {
-      //
-    }
 
 
 
 
 
-
-
-  /**
-  * Display the specified resource.
-  *
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
-  public function show($id)
-  {
-    //
-  }
-
-
-
-
-  /**
-  * Remove the specified resource from storage.
-  *
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
-  public function destroy($id)
-  {
-    //
-  }
 }

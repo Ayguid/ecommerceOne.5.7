@@ -14,9 +14,6 @@
                         </div>
                     @endif
 
-                    {{-- {{Auth::user()->orders}} --}}
-                    {{-- {{Auth::user()->name}}<br> --}}
-                    {{-- {{App\Product::all()}} --}}
 
                     <div class="showcase">
                       @component('components.who')

@@ -10,28 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+//user logged in
 
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-// Route::get('/', 'WelcomeController@index');
-
-// view helper rouutes
-Route::get('/', 'ViewHelperController@index')->name('landing');
-Route::get('/category/{category?}', 'ViewHelperController@index')->name('indexProducts');
-Route::get('/product/{id}', 'ViewHelperController@index')->name('showProduct');
-//filter menu
-
-Route::get('/search', 'ViewHelperController@filter')->name('filter');
-
-
-//cart stuff controller
-// Route::get('/cart', 'CartController@showCart')->name('showCart');
-// Route::post('/cart', 'CartController@cart')->name('addToCart');
-Route::get('/cart','CartController@index')->name('cart.index');
-Route::post('/cart','CartController@add')->name('cart.add');
-Route::post('/cart/remove','CartController@remove')->name('cart.remove');
 // Route::get('/cart/clear','CartController@clear')->name('cart.clear');
 // Route::post('/cart/conditions','CartController@addCondition')->name('cart.addCondition');
 // Route::delete('/cart/conditions','CartController@clearCartConditions')->name('cart.clearCartConditions');
@@ -48,6 +29,33 @@ Route::post('/cart/remove','CartController@remove')->name('cart.remove');
 
 
 
+
+
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::get('/', 'WelcomeController@index');
+
+// view helper controller
+Route::get('/', 'ViewHelperController@index')->name('landing');
+Route::get('/category/{category?}', 'ViewHelperController@index')->name('indexProducts');
+Route::get('/product/{id}', 'ViewHelperController@index')->name('showProduct');
+Route::get('/filter', 'ViewHelperController@filter')->name('filter');
+
+
+
+
+//cart stuff controller
+Route::get('/cart','CartController@index')->name('cart.index');
+Route::post('/cart','CartController@add')->name('cart.add');
+Route::post('/cart/remove','CartController@remove')->name('cart.remove');
+
+
+
+
+
+
 //creates auth routes for users
 Auth::routes(['verify' => true]);
 
@@ -56,17 +64,16 @@ Auth::routes(['verify' => true]);
 Route::get('/account', 'UserAccountController@index')->name('account');
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
-
-
-//address related
-// Route::post('/users/show-order-data', 'PremiseController@saveAddress')->name('saveAddress');
-//
-// //order to database
-// Route::post('/saveOrder', 'User_Order_Controller@cartToOrder')->name('cartToOrder');
+//order
+Route::get('/users/show-order-data', 'User_Order_Controller@showOrderData')->name('order-data');
+// address related
+Route::post('/users/show-order-data', 'PremiseController@saveAddress')->name('saveAddress');
+//order to database
+Route::post('/saveOrder', 'User_Order_Controller@cartToOrder')->name('cartToOrder');
+Route::post('/orders', 'User_Order_Controller@deleteOrder')->name('deleteOrder');
 //
 // //user orders
-// Route::get('/orders', 'User_Order_Controller@showOrders')->name('showOrders');
-// Route::post('/orders', 'User_Order_Controller@deleteOrder')->name('deleteOrder');
+Route::get('/orders', 'User_Order_Controller@showOrders')->name('showOrders');
 //
 //
 
@@ -96,8 +103,10 @@ Route::prefix('admin')->group(function()
   //product
   Route::get('addProduct', 'ProductController@showAddProductsForm')->name('admin.addProducts');
   Route::post('saveProduct/', 'ProductController@saveProduct')->name('admin.saveProduct');
-  // Route::get('editProduct/{id?}', 'AdminController@showEditProductsForm')->name('admin.editProduct');
-  // Route::post('editProducts/{id}', 'ProductController@update')->name('admin.updateProduct');
+
+  Route::get('editProduct/{id?}', 'ProductController@showEditProductsForm')->name('admin.showEditProductForm');
+
+  Route::post('editProduct', 'ProductController@update')->name('admin.updateProduct');
 
 
 //category

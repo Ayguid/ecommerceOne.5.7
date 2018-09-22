@@ -30,39 +30,44 @@ class LoginController extends Controller
    * @var string
    */
   // protected $redirectTo = '/home';
-  protected $redirectTo = '/';
-
   /**
    * Create a new controller instance.
    *
    * @return void
    */
-  public function __construct()
+  public function __construct(Request $request)
   {
     // Original method
       // $this->middleware('guest')->except('logout');
-
+      $this->request = $request;
       // New MultiAuth method
       $this->middleware('guest', ['except' => ['logout', 'userLogout']]);
   }
+
+
+
+  public function redirectTo()
+  {
+      if ($this->request->has('previous'))
+      {
+          $this->redirectTo = $this->request->get('previous');
+      }
+       return $this->redirectTo ?? '/';
+  }
+
+
+
 
   public function userLogout()
   {
     Auth::guard('web')->logout();
     return redirect('/');
-    }
+  }
 
 
 
 
 
-    // public function redirectTo()
-    // {
-    //     if ($this->request->has('previous'))
-    //     {
-    //         $this->redirectTo = $this->request->get('previous');
-    //     }
-    //      return $this->redirectTo ?? '/';
-    // }
+
 
 }

@@ -50,7 +50,7 @@ class Product extends Model
   }
 
 
-  
+
   public function brand()
   {
     return $this->hasOne(Ref_Product_Brand::class, 'product_brand_code', 'product_brand_code');
@@ -67,7 +67,7 @@ class Product extends Model
 
   {
 
-    return ($this->price)*(1-($this->onSale['discount']));
+    return ($this->price)*(1-($this->onSale['discount'])/100);
 
   }
 }

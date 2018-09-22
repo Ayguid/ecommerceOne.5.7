@@ -52,11 +52,11 @@
                 <td class="cart_quantity">
                   <div class="cart_quantity_button">
                     {{-- <input class="cart_quantity_input" type="text" name="quantity" value="{{$item->qty}}" autocomplete="off" size="2"> --}}
-                    <p>{{$item->qty}}</p>
+                    <p>{{$item->quantity}}</p>
                   </div>
                 </td>
                 <td class="cart_total">
-                  <p class="cart_total_price">${{$item->subtotal}}</p>
+                  <p class="cart_total_price">${{$item->quantity * $item->price}}</p>
                 </td>
 
               </tr>
@@ -65,7 +65,7 @@
 <td>
 
             <p>
-              Order Total <span>${{Cart::total()}}</span>
+              Order Total <span>${{Cart::getTotal()}}</span>
             </p>
           </td>
           </tr>

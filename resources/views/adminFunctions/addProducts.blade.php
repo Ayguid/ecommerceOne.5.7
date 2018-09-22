@@ -84,6 +84,12 @@
                   @endif
                 </div>
 
+                <div class="form-group">
+                  <label for="stock">Stock</label>
+                <input class="form-control" type="number" name="stock" min="0" value="" placeholder="Stock">
+
+              </div>
+
                 <input   type="submit" value="submit" class="btn btn-primary">
               </form>
 

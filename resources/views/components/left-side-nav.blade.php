@@ -50,7 +50,7 @@ input[type=text]:focus {
 
 
 
-  <input type="submit" name="" value="Apply">
+  <input class="btn" type="submit" name="" value="Apply Filters">
 </form>
 <br>
 <br>

@@ -45,6 +45,7 @@
                 </thead>
 
                 <tbody>
+                  {{-- <form class="" action="{{route('deleteOrder')}}" method="post"> --}}
                   <form class="" action="{{route('deleteOrder')}}" method="post">
                     {{ csrf_field() }}
                     <input type="text" name="order_id" value="{{$order->id}}" hidden>
