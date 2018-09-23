@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
-
+use MP;
 
 // use Request;
 
@@ -14,6 +14,7 @@ class ViewHelperController extends Controller
   //index one product, or all products, /or all products for one category
   public function index(Request $request)
   {
+  
     if ($request->id) {
       $product=Product::where('id', $request->id)->first();
       return view ('productView')->with('product',$product);
@@ -46,7 +47,7 @@ class ViewHelperController extends Controller
       return view ('landing')->with('data',['products'=>$products ]);
     }
 
-    
+
 
     $products=Product::query()
     ->when($request->has('product_name'), function ($query) use ($request) {

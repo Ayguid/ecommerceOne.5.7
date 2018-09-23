@@ -65,6 +65,12 @@
                 </tr>
               </tbody>
             </table>
+
+            <form class="" action="{{route('mercadoPago')}}" method="post">
+              {{ csrf_field() }}
+              <input type="text" name="order_id" value="{{$order->id}}" hidden>
+              <input class="btn" type="submit" name="" value="Pagar Con MercadoPago YA">
+            </form>
             <br>
             {{-- {{App\User_Order::totalBill()}} --}}
             {{-- {{App\User_Order::totalBill()}} --}}

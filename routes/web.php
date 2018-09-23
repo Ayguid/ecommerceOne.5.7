@@ -77,7 +77,7 @@ Route::get('/orders', 'User_Order_Controller@showOrders')->name('showOrders');
 //
 //
 
-
+Route::post('/mercadoPago', 'MercadoPagoController@mercadoPago')->name('mercadoPago');
 
 
 

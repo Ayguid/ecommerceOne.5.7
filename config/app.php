@@ -161,7 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         //extra packages
         // Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
-        Darryldecode\Cart\CartServiceProvider::class
+        Darryldecode\Cart\CartServiceProvider::class,
 
     ],
 
@@ -214,8 +214,8 @@ return [
 
         //extra packages
         // 'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
-        'Cart' => Darryldecode\Cart\Facades\CartFacade::class
-
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
+        // 'MP' => mercadopago\MP::class
     ],
 
 ];
