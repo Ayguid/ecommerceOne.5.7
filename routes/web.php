@@ -72,13 +72,21 @@ Route::post('/users/show-order-data', 'PremiseController@saveAddress')->name('sa
 Route::post('/saveOrder', 'User_Order_Controller@cartToOrder')->name('cartToOrder');
 Route::post('/orders', 'User_Order_Controller@deleteOrder')->name('deleteOrder');
 //
+
+
+
 // //user orders
 Route::get('/orders', 'User_Order_Controller@showOrders')->name('showOrders');
 //
 //
-
+// payment mercadopago
 Route::post('/mercadoPago', 'MercadoPagoController@mercadoPago')->name('mercadoPago');
 
+
+
+Route::get('/notifications', function(){
+  return view('testing');
+});
 
 
 

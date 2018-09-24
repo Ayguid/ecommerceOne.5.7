@@ -28,20 +28,31 @@ class MercadoPagoController extends Controller
     $order=User_Order::find($id);
     // dd($order);
     $mp= new MP(env("MP_APP_ID"), env("MP_APP_SECRET"));
-    $preference_data = ["external_reference"=>$order->id , "items" => []];
 
 
+    // $filters = array (
+    //   "external_reference" => $order->id,
+    // );
+    // $paymentInfo = $mp->search_payment($filters, 0, 10);
 
 
+    $preference_data = [
+      "external_reference"=>$order->id ,
+      "back_urls"=>["success"=>"http://localhost:8000/"],
+      "auto_return"=>"approved",
+      "items" => [],
+    ];
 
 
     foreach ($order->items as $item) {
-    $array= ['title'=>$item->product->product_name, 'quantity'=>$item->item_order_quantity, "currency_id" => "ARG",  "unit_price" => $item->item_price];
-    array_push ($preference_data['items'] , $array);
+      $array= ['title'=>$item->product->product_name, 'quantity'=>$item->item_order_quantity, "currency_id" => "ARG",  "unit_price" => $item->item_price];
+      array_push ($preference_data['items'] , $array);
     }
 
-    $preference = $mp->create_preference($preference_data);
 
+
+    $preference = $mp->create_preference($preference_data);
+    // dd($preference['response']);
 
     // $filters = array (
     //   "external_reference" => 12

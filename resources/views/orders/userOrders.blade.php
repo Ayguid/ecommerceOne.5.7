@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+
+
+
+
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
@@ -66,14 +70,23 @@
               </tbody>
             </table>
 
+            @if ($order->order_status_code === 1)
+
+
             <form class="" action="{{route('mercadoPago')}}" method="post">
               {{ csrf_field() }}
               <input type="text" name="order_id" value="{{$order->id}}" hidden>
               <input class="btn" type="submit" name="" value="Pagar Con MercadoPago YA">
             </form>
             <br>
+            @endif
             {{-- {{App\User_Order::totalBill()}} --}}
             {{-- {{App\User_Order::totalBill()}} --}}
+
+
+<br><br>
+
+
           @endforeach
 
 

@@ -66,14 +66,17 @@
       </table>
 
       @if ($cart->count() > 0)
+        <a class="btn btn-primary" href="{{route('order-data')}}">Check Out</a>
+        <br>
+        <br>
         <form class="" action="{{route('cart.remove')}}" method="post">
           {{-- <input type="text" name="clear_cart" value="{{$item->id}}" hidden> --}}
           {{ csrf_field() }}
           <button type="submit" class="btn btn-sm btn-danger">Clear Cart</button>
         </form>
         {{-- <a href="{{route('cart.clear')}}">Clear Cart</a> --}}
+        <br>
 
-        <a class="btn btn-default check_out" href="{{route('order-data')}}">Check Out</a>
       @endif
     @endisset
 
